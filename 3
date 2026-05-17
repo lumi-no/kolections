@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    vector<int> numbers = {1, 2, 3, 4, 5};
+
+    int sum =
+        accumulate(
+            numbers.begin(),
+            numbers.end(),
+            0,
+            [](int acc, int x)
+            {
+                return acc + x;
+            });
+
+    int product =
+        accumulate(
+            numbers.begin(),
+            numbers.end(),
+            1,
+            [](int acc, int x)
+            {
+                return acc * x;
+            });
+
+    int maximum =
+        accumulate(
+            numbers.begin() + 1,
+            numbers.end(),
+            numbers[0],
+            [](int acc, int x)
+            {
+                return max(acc, x);
+            });
+
+    int minimum =
+        accumulate(
+            numbers.begin() + 1,
+            numbers.end(),
+            numbers[0],
+            [](int acc, int x)
+            {
+                return min(acc, x);
+            });
+
+    cout << "Сума: " << sum << endl;
+
+    cout << "Добуток: " << product << endl;
+
+    cout << "Максимум: " << maximum << endl;
+
+    cout << "Мінімум: " << minimum << endl;
+
+    return 0;
+}
