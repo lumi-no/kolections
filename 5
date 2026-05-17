@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+
+using namespace std;
+
+int main()
+{
+    vector<int> numbers = {1, 2, 3, 4, 5, 6};
+
+    vector<int> filtered;
+
+    copy_if(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(filtered),
+        [](int x)
+        {
+            return x > 2;
+        });
+
+    vector<int> mapped;
+
+    transform(
+        filtered.begin(),
+        filtered.end(),
+        back_inserter(mapped),
+        [](int x)
+        {
+            return x * 10;
+        });
+
+    int sum =
+        accumulate(
+            mapped.begin(),
+            mapped.end(),
+            0,
+            [](int acc, int x)
+            {
+                return acc + x;
+            });
+
+    cout << "Сума: " << sum << endl;
+
+    return 0;
+}
