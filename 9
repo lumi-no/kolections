@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+
+using namespace std;
+
+int main()
+{
+    vector<vector<int>> data =
+    {
+        {1, 2},
+        {3, 4},
+        {5}
+    };
+
+    vector<int> result =
+        accumulate(
+            data.begin(),
+            data.end(),
+            vector<int>{},
+
+            [](vector<int> acc,
+               const vector<int>& current)
+            {
+                acc.insert(
+                    acc.end(),
+                    current.begin(),
+                    current.end());
+
+                return acc;
+            });
+
+    for (int x : result)
+    {
+        cout << x << " ";
+    }
+
+    return 0;
+}
