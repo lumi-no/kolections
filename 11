@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+
+using namespace std;
+
+int main()
+{
+    vector<double> sales =
+    {
+        100, 200, 300, 400
+    };
+
+    vector<double> discountedSales;
+
+    transform(
+        sales.begin(),
+        sales.end(),
+        back_inserter(discountedSales),
+
+        [](double price)
+        {
+            return price * 0.9;
+        });
+
+    double total =
+        accumulate(
+            discountedSales.begin(),
+            discountedSales.end(),
+            0.0);
+
+    double averageCheck =
+        total / discountedSales.size();
+
+    double maxPurchase =
+        *max_element(
+            discountedSales.begin(),
+            discountedSales.end());
+
+    cout << "Після знижки: ";
+    for (double price : discountedSales)
+    {
+        cout << price << " ";
+    }
+
+    cout << endl;
+
+    cout << "Середній чек: "
+         << averageCheck
+         << endl;
+
+    cout << "Максимальна покупка: "
+         << maxPurchase
+         << endl;
+
+    return 0;
+}
