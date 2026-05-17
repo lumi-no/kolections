@@ -1,0 +1,79 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <numeric>
+
+using namespace std;
+
+struct User
+{
+    string name;
+    int age;
+};
+
+int main()
+{
+    vector<User> users =
+    {
+        {"Alice", 25},
+        {"Bob", 35},
+        {"Charlie", 30}
+    };
+
+    vector<string> names;
+
+    transform(
+        users.begin(),
+        users.end(),
+        back_inserter(names),
+        [](const User& user)
+        {
+            return user.name;
+        });
+
+    vector<User> olderThan30;
+
+    copy_if(
+        users.begin(),
+        users.end(),
+        back_inserter(olderThan30),
+        [](const User& user)
+        {
+            return user.age > 30;
+        });
+
+    int totalAge =
+        accumulate(
+            users.begin(),
+            users.end(),
+            0,
+            [](int sum, const User& user)
+            {
+                return sum + user.age;
+            });
+
+    double averageAge =
+        static_cast<double>(totalAge) / users.size();
+
+    cout << "Імена: ";
+    for (const string& name : names)
+    {
+        cout << name << " ";
+    }
+
+    cout << endl;
+
+    cout << "Старші за 30: ";
+    for (const User& user : olderThan30)
+    {
+        cout << user.name << " ";
+    }
+
+    cout << endl;
+
+    cout << "Середній вік: "
+         << averageAge << endl;
+
+    return 0;
+}
