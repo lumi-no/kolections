@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+struct Product
+{
+    string name;
+    double price;
+};
+
+int main()
+{
+    vector<Product> products =
+    {
+        {"A", 100},
+        {"B", 200},
+        {"C", 300}
+    };
+
+    vector<Product> discountedProducts;
+
+    transform(
+        products.begin(),
+        products.end(),
+        back_inserter(discountedProducts),
+
+        [](const Product& product)
+        {
+            return Product
+            {
+                product.name,
+                product.price * 0.8
+            };
+        });
+
+    vector<Product> expensiveProducts;
+
+    copy_if(
+        discountedProducts.begin(),
+        discountedProducts.end(),
+        back_inserter(expensiveProducts),
+
+        [](const Product& product)
+        {
+            return product.price > 150;
+        });
+
+    vector<string> names;
+
+    transform(
+        expensiveProducts.begin(),
+        expensiveProducts.end(),
+        back_inserter(names),
+
+        [](const Product& product)
+        {
+            return product.name;
+        });
+
+    cout << "Назви товарів: ";
+
+    for (const string& name : names)
+    {
+        cout << name << " ";
+    }
+
+    return 0;
+}
