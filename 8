@@ -1,0 +1,86 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+
+using namespace std;
+
+struct Order
+{
+    int id;
+    vector<int> items;
+};
+
+int main()
+{
+    vector<Order> orders =
+    {
+        {1, {100, 200}},
+        {2, {50, 50, 50}}
+    };
+
+    vector<int> orderSums;
+
+    for (const Order& order : orders)
+    {
+        int sum =
+            accumulate(
+                order.items.begin(),
+                order.items.end(),
+                0);
+
+        orderSums.push_back(sum);
+
+        cout << "Замовлення "
+             << order.id
+             << ": "
+             << sum
+             << endl;
+    }
+
+    int totalSum =
+        accumulate(
+            orderSums.begin(),
+            orderSums.end(),
+            0);
+
+    cout << "Загальна сума: "
+         << totalSum
+         << endl;
+
+    auto maxOrder =
+        max_element(
+            orders.begin(),
+            orders.end(),
+            [](const Order& a, const Order& b)
+            {
+                int sumA =
+                    accumulate(
+                        a.items.begin(),
+                        a.items.end(),
+                        0);
+
+                int sumB =
+                    accumulate(
+                        b.items.begin(),
+                        b.items.end(),
+                        0);
+
+                return sumA < sumB;
+            });
+
+    int maxSum =
+        accumulate(
+            maxOrder->items.begin(),
+            maxOrder->items.end(),
+            0);
+
+    cout << "Максимальне замовлення: "
+         << maxOrder->id
+         << " ("
+         << maxSum
+         << ")"
+         << endl;
+
+    return 0;
+}
