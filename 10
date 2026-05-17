@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <numeric>
+
+using namespace std;
+
+int main()
+{
+    vector<string> words =
+    {
+        "apple",
+        "banana",
+        "kiwi"
+    };
+
+    vector<string> upperWords;
+
+    transform(
+        words.begin(),
+        words.end(),
+        back_inserter(upperWords),
+
+        [](string word)
+        {
+            transform(
+                word.begin(),
+                word.end(),
+                word.begin(),
+                ::toupper);
+
+            return word;
+        });
+
+    vector<string> longWords;
+
+    copy_if(
+        words.begin(),
+        words.end(),
+        back_inserter(longWords),
+
+        [](const string& word)
+        {
+            return word.length() > 4;
+        });
+
+    int totalCharacters =
+        accumulate(
+            words.begin(),
+            words.end(),
+            0,
+
+            [](int sum, const string& word)
+            {
+                return sum + word.length();
+            });
+
+    cout << "Верхній регістр: ";
+    for (const string& word : upperWords)
+    {
+        cout << word << " ";
+    }
+
+    cout << endl;
+
+    cout << "Довші за 4 символи: ";
+    for (const string& word : longWords)
+    {
+        cout << word << " ";
+    }
+
+    cout << endl;
+
+    cout << "Кількість символів: "
+         << totalCharacters
+         << endl;
+
+    return 0;
+}
