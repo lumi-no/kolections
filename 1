@@ -1,0 +1,102 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int square(int x)
+{
+    return x * x;
+}
+
+int doubleNumber(int x)
+{
+    return x * 2;
+}
+
+string toString(int x)
+{
+    return to_string(x);
+}
+
+int main()
+{
+    vector<int> numbers = {1, 2, 3, 4, 5};
+
+    vector<int> squaresLambda;
+    vector<int> doublesLambda;
+    vector<string> stringsLambda;
+
+    transform(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(squaresLambda),
+        [](int x)
+        {
+            return x * x;
+        });
+
+    transform(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(doublesLambda),
+        [](int x)
+        {
+            return x * 2;
+        });
+
+    transform(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(stringsLambda),
+        [](int x)
+        {
+            return to_string(x);
+        });
+
+    vector<int> squaresFunction;
+    vector<int> doublesFunction;
+    vector<string> stringsFunction;
+
+    transform(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(squaresFunction),
+        square);
+
+    transform(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(doublesFunction),
+        doubleNumber);
+
+    transform(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(stringsFunction),
+        toString);
+
+    cout << "Квадрати:" << endl;
+    for (int x : squaresFunction)
+    {
+        cout << x << " ";
+    }
+
+    cout << endl;
+
+    cout << "Подвоєні:" << endl;
+    for (int x : doublesFunction)
+    {
+        cout << x << " ";
+    }
+
+    cout << endl;
+
+    cout << "Рядки:" << endl;
+    for (string s : stringsFunction)
+    {
+        cout << s << " ";
+    }
+
+    return 0;
+}
