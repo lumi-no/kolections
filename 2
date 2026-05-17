@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    vector<int> numbers =
+    {
+        1,2,3,4,5,6,7,8,9,10
+    };
+
+    vector<int> evenNumbers;
+    vector<int> greaterThan5;
+    vector<int> divisibleBy3;
+
+    copy_if(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(evenNumbers),
+        [](int x)
+        {
+            return x % 2 == 0;
+        });
+
+    copy_if(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(greaterThan5),
+        [](int x)
+        {
+            return x > 5;
+        });
+
+    copy_if(
+        numbers.begin(),
+        numbers.end(),
+        back_inserter(divisibleBy3),
+        [](int x)
+        {
+            return x % 3 == 0;
+        });
+
+    cout << "Парні числа: ";
+    for (int x : evenNumbers)
+    {
+        cout << x << " ";
+    }
+
+    cout << endl;
+
+    cout << "Більше 5: ";
+    for (int x : greaterThan5)
+    {
+        cout << x << " ";
+    }
+
+    cout << endl;
+
+    cout << "Кратні 3: ";
+    for (int x : divisibleBy3)
+    {
+        cout << x << " ";
+    }
+
+    return 0;
+}
