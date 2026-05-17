@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+struct User
+{
+    string name;
+    int age;
+};
+
+int main()
+{
+    vector<User> users =
+    {
+        {"Alice", 25}
+    };
+
+    vector<string> result;
+
+    transform(
+        users.begin(),
+        users.end(),
+        back_inserter(result),
+        [](const User& user)
+        {
+            return user.name +
+                   " (" +
+                   to_string(user.age) +
+                   ")";
+        });
+
+    for (const string& text : result)
+    {
+        cout << text << endl;
+    }
+
+    return 0;
+}
