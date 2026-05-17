@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <functional>
+#include <numeric>
+
+using namespace std;
+
+struct Transaction
+{
+    double amount;
+    string currency;
+};
+
+using Step = function<vector<double>(const vector<double>&)>;
+
+vector<double> filterUsd(const vector<Transaction>& transactions)
+{
+    vector<double> result;
+
+    for (const Transaction& transaction : transactions)
+    {
+        if (transaction.currency == "USD")
+        {
+            result.push_back(transaction.amount);
+        }
+    }
+
+    return result;
+}
+
+vector<double> convertToUah(const vector<double>& amounts)
+{
+    vector<double> result;
+
+    for (double amount : amounts)
+    {
+        result.push_back(amount * 40);
+    }
+
+    return result;
+}
+
+double sumAll(const vector<double>& amounts)
+{
+    return accumulate(amounts.begin(), amounts.end(), 0.0);
+}
+
+double runPipeline(const vector<Transaction>& transactions)
+{
+    vector<double> usdAmounts = filterUsd(transactions);
+    vector<double> uahAmounts = convertToUah(usdAmounts);
+    double total = sumAll(uahAmounts);
+
+    return total;
+}
+
+int main()
+{
+    vector<Transaction> transactions =
+    {
+        {100, "USD"},
+        {200, "EUR"},
+        {150, "USD"}
+    };
+
+    double result = runPipeline(transactions);
+
+    cout << "Загальна сума в гривнях: "
+         << result << endl;
+
+    return 0;
+}
